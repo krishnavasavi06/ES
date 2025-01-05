@@ -1,0 +1,13 @@
+const int gasSensorPin = A0;
+int gasLevel;
+
+void setup() {
+  Serial.begin(9600);
+}
+
+void loop() {
+  gasLevel = analogRead(gasSensorPin);
+  Serial.print("Gas Level: ");
+  Serial.println(gasLevel);
+  delay(1000);
+}
