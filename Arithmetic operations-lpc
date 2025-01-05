@@ -1,0 +1,38 @@
+#include <lpc214x.h>
+#include <stdio.h>
+
+void init_serial() {
+    PINSEL0 = 0x00000005;
+    U0LCR = 0x83;
+    U0DLM = 0; 
+    U0DLL = 97;
+    U0LCR = 0x03;
+}
+
+void uart_send(char c) {
+    while (!(U0LSR & 0x20));
+    U0THR = c;
+}
+
+void uart_send_string(const char *str) {
+    while(*str) {
+        uart_send(*str++);
+    }
+}
+
+int main() {
+    init_serial();
+    int a = 10, b = 5;
+    char buffer[32];
+    
+    sprintf(buffer, "Sum: %d\r\n", a + b);
+    uart_send_string(buffer);
+    sprintf(buffer, "Difference: %d\r\n", a - b);
+    uart_send_string(buffer);
+    sprintf(buffer, "Product: %d\r\n", a * b);
+    uart_send_string(buffer);
+    sprintf(buffer, "Quotient: %.2f\r\n", (float)a / b);
+    uart_send_string(buffer);
+    
+    while(1);
+}
