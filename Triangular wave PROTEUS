@@ -1,0 +1,26 @@
+ORG 00H               ; Start of the program
+MOV P2.0, #00H          ; Clear Port 1 (connected to DAC0808)
+MOV A, #00H           ; Initialize accumulator to 0 (starting value)
+MOV R0, #00H          ; Initialize R0 for increment step
+UPWARD:
+    INC A             ; Increment the value in the accumulator (rising edge of triangle)
+    MOV P1, A         ; Send the incremented value to Port 1 (connected to DAC)
+    ACALL DELAY       ; Call delay for waveform frequency control
+    CJNE A, #0FFH, UPWARD ; Continue incrementing until the maximum value (0xFF)
+DOWNWARD:
+    DEC A             ; Decrement the value in the accumulator (falling edge of triangle)
+    MOV P1, A         ; Send the decremented value to Port 1
+    ACALL DELAY       ; Delay for waveform frequency control
+    CJNE A, #00H, DOWNWARD ; Continue decrementing until it reaches 0
+SJMP UPWARD           ; Repeat the process indefinitely to generate a continuous waveform
+
+; Delay Subroutine
+DELAY:
+    MOV R1, #255      ; Outer loop for delay
+DELAY_LOOP1:
+    MOV R2, #255      ; Inner loop for delay
+DELAY_LOOP2:
+    DJNZ R2, DELAY_LOOP2 ; Decrement inner loop
+    DJNZ R1, DELAY_LOOP1 ; Decrement outer loop
+    RET               ; Return from delay
+END
