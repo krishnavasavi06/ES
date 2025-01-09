@@ -5,11 +5,11 @@ void delay() {
 }
 
 int main() {
-    PINSEL1 = 0x00080000; // Select DAC output pin
+    PINSEL1 = 0x00080000; 
     while(1) {
-        DACR = 0x000003FF; // Maximum value for 10-bit DAC (1023)
+        DACR = 0x000003FF; 
         delay();
-        DACR = 0x00000000; // Minimum value for 10-bit DAC (0)
+        DACR = 0x00000000; 
         delay();
     }
 }
