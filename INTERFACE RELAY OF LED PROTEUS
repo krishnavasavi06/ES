@@ -1,0 +1,17 @@
+ORG 0000H          
+MOV P1, #00H      
+MAIN_LOOP:
+    SETB P1.0      
+    ACALL DELAY    
+    CLR P1.0       
+    ACALL DELAY    
+    SJMP MAIN_LOOP;
+DELAY:
+    MOV R1, #255  
+DELAY1:
+    MOV R2, #255  
+DELAY2:
+    DJNZ R2, DELAY2 
+    DJNZ R1, DELAY1 
+    RET           
+END            
