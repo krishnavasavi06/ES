@@ -5,15 +5,15 @@ void delay() {
 }
 
 int main() {
-    PINSEL1 = 0x00080000; // Select DAC output pin
+    PINSEL1 = 0x00080000; 
     int value = 0;
     int step = 1;
     
     while(1) {
-        DACR = (value << 6); // Send value to DAC
+        DACR = (value << 6); 
         
-        if(value >= 1023) step = -1; // If max value, decrement
-        if(value <= 0) step = 1; // If min value, increment
+        if(value >= 1023) step = -1; 
+        if(value <= 0) step = 1;
         
         value += step;
         delay();
