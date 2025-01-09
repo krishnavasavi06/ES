@@ -1,0 +1,15 @@
+#include "lpc214x.h"
+
+int main(void)
+{
+  unsigned int sw_sts;
+
+  IODIR0 = 0x0000ff00; 
+	PINSEL0 = 0;   		
+while(1)
+{
+  sw_sts = IOPIN0;	
+  IOSET0 = 0x0000ff00;   
+  IOCLR0 = sw_sts >> 8;  
+}
+}
